@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			p {
+				font-family: "微软雅黑";
+				font-size: 20px;
+				float: left;
+				margin-left: 20px;
+				font-weight: bold;
+			}
+			
+			.big {
+				width: 330px;
+				height: 330px;
+				margin: 20px;
+				position: fixed;
+				top: 60px;
+				border: dashed 3px red;
+			}
+		</style>
+	</head>
+
+	<body>
+		<p draggable="true">1.第一天课</p>
+		<p draggable="true">2.第二天课</p>
+		<p draggable="true">3.第三天课</p>
+		<div class="big"></div>
+		<script type="text/javascript">
+			var p = document.querySelectorAll("p");
+			var bigBox = document.querySelector(".big");
+			var tmp = null;
+
+			for(var i = 0; i<p.length; i++) {
+				p[i].ondragstart = function() {
+					tmp = this;
+					console.log("开始");
+				}
+				p[i].ondragend = function() {
+					tmp = null;
+					console.log("结束");
+				}
+			}
+
+			bigBox.ondragenter = function() {
+				console.log("进入");
+			}
+			bigBox.ondragover = function(e) {
+				//				console.log("悬停");
+				e.preventDefault();
+			}
+			bigBox.ondragleave = function() {
+				
+				console.log("离开");
+			}
+			bigBox.ondrop = function() {
+				
+				console.log("释放");
+
+				if(tmp != null) {
+					this.appendChild(tmp);
+				}
+				
+				this.removeChild(tmp);
+			}
+		</script>
+	</body>
+
+</html>
